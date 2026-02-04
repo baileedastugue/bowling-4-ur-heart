@@ -3,30 +3,34 @@ import { useFrame } from '@react-three/fiber'
 import {Mesh, LineSegments, SphereGeometry, MathUtils, Group} from 'three'
 
 const BowlingBall = () => {
-  const [targetY, setTargetY] = useState(0)
-  const currentY = useRef(0)
+  const [targetZ, setTargetZ] = useState(0)
+  const currentZ = useRef(0)
   const groupRef = useRef<Group>(null)
   const meshRef = useRef<Mesh>(null)
   const edgesRef = useRef<LineSegments>(null)
 
+  const toggleTargetZ = () => {
+    setTargetZ(targetZ === 0 ? 3 : 0)
+  }
+
   useFrame((state, delta) => {
     // Smoothly interpolate position
     if (groupRef.current) {
-      currentY.current = MathUtils.lerp(currentY.current, targetY, delta * 5)
-      groupRef.current.position.y = currentY.current
+      currentZ.current = MathUtils.lerp(currentZ.current, targetZ, delta * .5)
+      groupRef.current.position.z = currentZ.current
     }
     
     // Rotation
     if (meshRef.current) {
-      meshRef.current.rotation.x = -state.clock.elapsedTime * .7
+      meshRef.current.rotation.x = -state.clock.elapsedTime * 2
     }
     if (edgesRef.current) {
-      edgesRef.current.rotation.x = -state.clock.elapsedTime * .7
+      edgesRef.current.rotation.x = -state.clock.elapsedTime * 2
     }
   })
 
   return (
-    <group ref={groupRef} position={[0, 0, 0]} onClick={() => setTargetY(2)}>
+    <group ref={groupRef} position={[0, -1, 2]} onClick={() => toggleTargetZ()}>
       <mesh ref={meshRef}>
         <sphereGeometry args={[1, 30, 30]} />
         <meshPhongMaterial color="white" shininess={150} />
