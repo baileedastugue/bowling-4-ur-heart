@@ -3,7 +3,7 @@ import { useFrame } from '@react-three/fiber'
 import {Mesh, LineSegments, SphereGeometry, MathUtils, Group} from 'three'
 
 const START_Z = 5
-const END_Z = -5
+const END_Z = -12
 
 const BowlingBall = () => {
   const [targetZ, setTargetZ] = useState(START_Z)
@@ -46,7 +46,7 @@ const BowlingBall = () => {
 
   return (
     <group ref={groupRef} position={[0, 0, START_Z]} onClick={() => toggleTargetZ()}>
-      <mesh ref={meshRef}>
+      <mesh ref={meshRef} castShadow>
         <sphereGeometry args={[1, 30, 30]} />
         <meshPhongMaterial color="white" shininess={150} />
       </mesh>
