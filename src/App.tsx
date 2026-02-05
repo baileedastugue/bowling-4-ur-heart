@@ -1,6 +1,7 @@
 import { Canvas } from '@react-three/fiber'
 import BowlingBall from './components/BowlingBall'
 import Plane from './components/Plane'
+import QuestionText from './components/QuestionText'
 import './App.css'
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
         <Plane />
         <BowlingBall />
       </Canvas>
+      <QuestionText />
     </div>
   )
 }

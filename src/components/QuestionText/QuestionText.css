@@ -1,0 +1,13 @@
+.text-overlay {
+  position: absolute;
+  top: 10%;
+  left: 5%;
+  transform: translate(0%, -50%);
+  color: white;
+  font-size: 48px;
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  pointer-events: none;
+  z-index: 10;
+}
