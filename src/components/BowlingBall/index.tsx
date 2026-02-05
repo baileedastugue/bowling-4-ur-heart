@@ -2,16 +2,19 @@ import { useState, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import {Mesh, LineSegments, SphereGeometry, MathUtils, Group} from 'three'
 
+const START_Z = 5
+const END_Z = -5
+
 const BowlingBall = () => {
-  const [targetZ, setTargetZ] = useState(0)
-  const currentZ = useRef(0)
+  const [targetZ, setTargetZ] = useState(START_Z)
+  const currentZ = useRef(START_Z)
   const rotationOffset = useRef(0)
   const groupRef = useRef<Group>(null)
   const meshRef = useRef<Mesh>(null)
   const edgesRef = useRef<LineSegments>(null)
 
   const toggleTargetZ = () => {
-    setTargetZ(targetZ === 0 ? 3 : 0)
+    setTargetZ(targetZ === START_Z ? END_Z : START_Z)
   }
 
   useFrame((_state, delta) => {
@@ -20,6 +23,7 @@ const BowlingBall = () => {
       const previousZ = currentZ.current
       currentZ.current = MathUtils.lerp(currentZ.current, targetZ, delta * .5)
       groupRef.current.position.z = currentZ.current
+
       
       // Check if ball is moving
       const isMoving = Math.abs(currentZ.current - targetZ) > 0.01
@@ -41,7 +45,7 @@ const BowlingBall = () => {
   })
 
   return (
-    <group ref={groupRef} position={[0, -1, 2]} onClick={() => toggleTargetZ()}>
+    <group ref={groupRef} position={[0, 0, START_Z]} onClick={() => toggleTargetZ()}>
       <mesh ref={meshRef}>
         <sphereGeometry args={[1, 30, 30]} />
         <meshPhongMaterial color="white" shininess={150} />
